@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**device_uuids** | **List[str]** |  | [optional] 
+**device_uuids** | **List[UUID]** |  | [optional] 
 **name_contains** | **str** |  | [optional] 
 
 ## Example

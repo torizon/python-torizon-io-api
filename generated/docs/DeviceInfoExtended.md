@@ -16,8 +16,8 @@ Name | Type | Description | Notes
 **hibernated** | **bool** |  | 
 **last_updated** | **datetime** |  | [optional] 
 **device_fleets** | [**List[Fleet]**](Fleet.md) |  | [optional] 
-**device_packages** | [**List[DevicePackage]**](DevicePackage.md) |  | [optional] 
-**device_tags** | [**List[Tuple2ComToradexApiGwDataDeviceTagIdComToradexApiGwDataDeviceTagValue]**](Tuple2ComToradexApiGwDataDeviceTagIdComToradexApiGwDataDeviceTagValue.md) |  | [optional] 
+**device_packages** | [**List[InstalledPackage]**](InstalledPackage.md) |  | [optional] 
+**tags** | **Dict[str, str]** |  | 
 **network_info** | [**NetworkInfo**](NetworkInfo.md) |  | 
 
 ## Example

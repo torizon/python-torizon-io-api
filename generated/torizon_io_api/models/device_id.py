@@ -17,8 +17,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
+from uuid import UUID
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -26,7 +27,7 @@ class DeviceId(BaseModel):
     """
     DeviceId
     """ # noqa: E501
-    uuid: StrictStr
+    uuid: UUID
     __properties: ClassVar[List[str]] = ["uuid"]
 
     model_config = ConfigDict(

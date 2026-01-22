@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** |  | 
 **meta** | [**SeriesMeta**](SeriesMeta.md) |  | 
-**points** | [**List[Tuple2ScalaLongScalaOptionScalaDouble]**](Tuple2ScalaLongScalaOptionScalaDouble.md) |  | [optional] 
+**points** | **List[List[object]]** |  | [optional] 
 
 ## Example
 

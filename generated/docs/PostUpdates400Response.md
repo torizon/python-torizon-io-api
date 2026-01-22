@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **description** | [**AnyOf**](AnyOf.md) |  | [optional] 
 **code** | **str** |  | 
 **cause** | [**AnyOf**](AnyOf.md) |  | [optional] 
-**error_id** | **str** |  | [optional] 
+**error_id** | **UUID** |  | [optional] 
 
 ## Example
 

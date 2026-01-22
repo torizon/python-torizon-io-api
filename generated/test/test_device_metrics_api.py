@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -26,6 +26,13 @@ class TestDeviceMetricsApi(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
+    def test_get_device_data_devices_deviceuuid_detailed_metrics(self) -> None:
+        """Test case for get_device_data_devices_deviceuuid_detailed_metrics
+
+        Get detailed metrics data for a single device
+        """
+        pass
+
     def test_get_device_data_devices_deviceuuid_metrics(self) -> None:
         """Test case for get_device_data_devices_deviceuuid_metrics
 
@@ -44,6 +51,20 @@ class TestDeviceMetricsApi(unittest.TestCase):
         """Test case for get_device_data_metric_names
 
         Get the list of metrics available in your repository
+        """
+        pass
+
+    def test_post_device_data_fleets_fleetid_metrics_outliers(self) -> None:
+        """Test case for post_device_data_fleets_fleetid_metrics_outliers
+
+        Get fleet outlier metrics from a fleet of devices
+        """
+        pass
+
+    def test_post_device_data_fleets_fleetid_metrics_report(self) -> None:
+        """Test case for post_device_data_fleets_fleetid_metrics_report
+
+        Get metrics report for fleet of devices
         """
         pass
 

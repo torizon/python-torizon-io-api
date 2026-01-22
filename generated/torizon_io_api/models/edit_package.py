@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -71,6 +71,9 @@ class EditPackage(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of proprietary_meta
+        if self.proprietary_meta:
+            _dict['proprietaryMeta'] = self.proprietary_meta.to_dict()
         # set to None if hardware_ids (nullable) is None
         # and model_fields_set contains the field
         if self.hardware_ids is None and "hardware_ids" in self.model_fields_set:
@@ -105,7 +108,7 @@ class EditPackage(BaseModel):
         _obj = cls.model_validate({
             "hardwareIds": obj.get("hardwareIds"),
             "uri": obj.get("uri"),
-            "proprietaryMeta": obj.get("proprietaryMeta"),
+            "proprietaryMeta": AnyOf.from_dict(obj["proprietaryMeta"]) if obj.get("proprietaryMeta") is not None else None,
             "comment": obj.get("comment")
         })
         return _obj

@@ -20,6 +20,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from uuid import UUID
 from torizon_io_api.models.update_reported_result import UpdateReportedResult
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,7 +29,7 @@ class UpdateResponse(BaseModel):
     """
     UpdateResponse
     """ # noqa: E501
-    update_id: StrictStr = Field(alias="updateId")
+    update_id: UUID = Field(alias="updateId")
     status: StrictStr
     created_at: datetime = Field(alias="createdAt")
     scheduled_for: Optional[datetime] = Field(default=None, alias="scheduledFor")
@@ -112,6 +113,7 @@ class UpdateResponse(BaseModel):
             "scheduledFor": obj.get("scheduledFor"),
             "completedAt": obj.get("completedAt"),
             "deviceResult": UpdateReportedResult.from_dict(obj["deviceResult"]) if obj.get("deviceResult") is not None else None,
+            "packages": obj.get("packages")
         })
         return _obj
 

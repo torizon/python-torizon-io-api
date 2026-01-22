@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**hashes** | **str** |  | 
+**hashes** | [**Hashes**](Hashes.md) |  | 
 **length** | **int** |  | 
 
 ## Example

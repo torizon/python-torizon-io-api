@@ -2,7 +2,7 @@
 
 # flake8: noqa
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -23,13 +23,14 @@ from torizon_io_api.models.custom_update_data import CustomUpdateData
 from torizon_io_api.models.delegation_info import DelegationInfo
 from torizon_io_api.models.detailed_metric_query import DetailedMetricQuery
 from torizon_io_api.models.device_create_req import DeviceCreateReq
+from torizon_io_api.models.device_id import DeviceId
 from torizon_io_api.models.device_info import DeviceInfo
 from torizon_io_api.models.device_info_basic import DeviceInfoBasic
 from torizon_io_api.models.device_info_extended import DeviceInfoExtended
 from torizon_io_api.models.device_name_request import DeviceNameRequest
 from torizon_io_api.models.device_notes_request import DeviceNotesRequest
-from torizon_io_api.models.device_package import DevicePackage
 from torizon_io_api.models.device_packages import DevicePackages
+from torizon_io_api.models.device_packages_search_params import DevicePackagesSearchParams
 from torizon_io_api.models.device_session import DeviceSession
 from torizon_io_api.models.device_sort import DeviceSort
 from torizon_io_api.models.device_sort_direction import DeviceSortDirection
@@ -44,6 +45,7 @@ from torizon_io_api.models.fleet import Fleet
 from torizon_io_api.models.fleet_metrics_outliers_request import FleetMetricsOutliersRequest
 from torizon_io_api.models.fleet_metrics_outliers_response import FleetMetricsOutliersResponse
 from torizon_io_api.models.fleet_type import FleetType
+from torizon_io_api.models.hashes import Hashes
 from torizon_io_api.models.image import Image
 from torizon_io_api.models.installed_package import InstalledPackage
 from torizon_io_api.models.ip_address_request import IpAddressRequest
@@ -57,14 +59,16 @@ from torizon_io_api.models.outlier import Outlier
 from torizon_io_api.models.outlier_aggregation_method import OutlierAggregationMethod
 from torizon_io_api.models.outlier_values import OutlierValues
 from torizon_io_api.models.package import Package
-from torizon_io_api.models.package_info import PackageInfo
-from torizon_io_api.models.pagination_result_com_toradex_api_gw_data_device_info_basic import PaginationResultComToradexApiGwDataDeviceInfoBasic
-from torizon_io_api.models.pagination_result_com_toradex_api_gw_data_device_packages import PaginationResultComToradexApiGwDataDevicePackages
-from torizon_io_api.models.pagination_result_com_toradex_api_gw_data_fleet import PaginationResultComToradexApiGwDataFleet
-from torizon_io_api.models.pagination_result_com_toradex_api_gw_data_network_info import PaginationResultComToradexApiGwDataNetworkInfo
-from torizon_io_api.models.pagination_result_com_toradex_api_gw_data_packages_external_package import PaginationResultComToradexApiGwDataPackagesExternalPackage
-from torizon_io_api.models.pagination_result_com_toradex_api_gw_data_packages_package import PaginationResultComToradexApiGwDataPackagesPackage
-from torizon_io_api.models.pagination_result_java_lang_string import PaginationResultJavaLangString
+from torizon_io_api.models.pagination_result_device_info_basic import PaginationResultDeviceInfoBasic
+from torizon_io_api.models.pagination_result_device_packages import PaginationResultDevicePackages
+from torizon_io_api.models.pagination_result_external_package import PaginationResultExternalPackage
+from torizon_io_api.models.pagination_result_fleet import PaginationResultFleet
+from torizon_io_api.models.pagination_result_network_info import PaginationResultNetworkInfo
+from torizon_io_api.models.pagination_result_package import PaginationResultPackage
+from torizon_io_api.models.pagination_result_string import PaginationResultString
+from torizon_io_api.models.pagination_result_update_response import PaginationResultUpdateResponse
+from torizon_io_api.models.pagination_result_user_session import PaginationResultUserSession
+from torizon_io_api.models.post_updates400_response import PostUpdates400Response
 from torizon_io_api.models.provision_info import ProvisionInfo
 from torizon_io_api.models.public_keys import PublicKeys
 from torizon_io_api.models.queue_response import QueueResponse
@@ -80,12 +84,12 @@ from torizon_io_api.models.target_image import TargetImage
 from torizon_io_api.models.target_items_sort import TargetItemsSort
 from torizon_io_api.models.time_aggregation import TimeAggregation
 from torizon_io_api.models.time_aggregation_method import TimeAggregationMethod
-from torizon_io_api.models.tuple2_com_toradex_api_gw_data_device_tag_id_com_toradex_api_gw_data_device_tag_value import Tuple2ComToradexApiGwDataDeviceTagIdComToradexApiGwDataDeviceTagValue
-from torizon_io_api.models.tuple2_scala_long_scala_option_scala_double import Tuple2ScalaLongScalaOptionScalaDouble
 from torizon_io_api.models.update_create_result import UpdateCreateResult
 from torizon_io_api.models.update_fleet import UpdateFleet
 from torizon_io_api.models.update_hibernation_status_request import UpdateHibernationStatusRequest
+from torizon_io_api.models.update_reported_result import UpdateReportedResult
 from torizon_io_api.models.update_request import UpdateRequest
+from torizon_io_api.models.update_response import UpdateResponse
 from torizon_io_api.models.upstream_endpoint_error_repr import UpstreamEndpointErrorRepr
 from torizon_io_api.models.user_info import UserInfo
 from torizon_io_api.models.user_session import UserSession

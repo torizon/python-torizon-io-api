@@ -325,7 +325,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_device_data_metric_names**
-> PaginationResultJavaLangString get_device_data_metric_names(var_from=var_from, to=to)
+> PaginationResultString get_device_data_metric_names(var_from=var_from, to=to)
 
 Get the list of metrics available in your repository
 
@@ -347,7 +347,7 @@ This will return the list of metrics reported by devices in your repository duri
 
 ```python
 import torizon_io_api
-from torizon_io_api.models.pagination_result_java_lang_string import PaginationResultJavaLangString
+from torizon_io_api.models.pagination_result_string import PaginationResultString
 from torizon_io_api.rest import ApiException
 from pprint import pprint
 
@@ -395,7 +395,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PaginationResultJavaLangString**](PaginationResultJavaLangString.md)
+[**PaginationResultString**](PaginationResultString.md)
 
 ### Authorization
 

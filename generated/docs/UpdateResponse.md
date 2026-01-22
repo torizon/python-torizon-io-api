@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**update_id** | **str** |  | 
+**update_id** | **UUID** |  | 
 **status** | **str** |  | 
 **created_at** | **datetime** |  | 
 **scheduled_for** | **datetime** |  | [optional] 

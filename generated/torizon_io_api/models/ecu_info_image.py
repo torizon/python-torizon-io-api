@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List
+from torizon_io_api.models.hashes import Hashes
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +29,7 @@ class EcuInfoImage(BaseModel):
     """ # noqa: E501
     filepath: StrictStr
     size: StrictInt
-    hash: StrictStr
+    hash: Hashes
     __properties: ClassVar[List[str]] = ["filepath", "size", "hash"]
 
     model_config = ConfigDict(
@@ -70,6 +71,9 @@ class EcuInfoImage(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of hash
+        if self.hash:
+            _dict['hash'] = self.hash.to_dict()
         return _dict
 
     @classmethod
@@ -84,7 +88,7 @@ class EcuInfoImage(BaseModel):
         _obj = cls.model_validate({
             "filepath": obj.get("filepath"),
             "size": obj.get("size"),
-            "hash": obj.get("hash")
+            "hash": Hashes.from_dict(obj["hash"]) if obj.get("hash") is not None else None
         })
         return _obj
 

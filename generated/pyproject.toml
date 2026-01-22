@@ -1,6 +1,6 @@
 [project]
 name = "torizon_io_api"
-version = "0.0.5"
+version = "0.0.6"
 description = "Torizon OTA v2beta API"
 authors = [
   {name = "OpenAPI Generator Community",email = "team@openapitools.org"},
@@ -20,11 +20,7 @@ dependencies = [
 Repository = "https://github.com/GIT_USER_ID/GIT_REPO_ID"
 
 [tool.poetry]
-name = "torizon_io_api"
-version = "0.0.5"
-description = "Torizon OTA v2beta API"
-authors = ["OpenAPI Generator Community <team@openapitools.org>"]
-readme = "README.md"
+requires-poetry = ">=2.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">= 7.2.1"

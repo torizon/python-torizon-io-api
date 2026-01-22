@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -21,7 +21,7 @@ from setuptools import setup, find_packages  # noqa: H301
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "torizon-io-api"
-VERSION = "0.0.5"
+VERSION = "0.0.6"
 PYTHON_REQUIRES = ">= 3.9"
 REQUIRES = [
     "urllib3 >= 2.1.0, < 3.0.0",
@@ -33,11 +33,11 @@ REQUIRES = [
 setup(
     name=NAME,
     version=VERSION,
-    description="Torizon OTA",
+    description="Torizon OTA v2beta API",
     author="OpenAPI Generator community",
     author_email="team@openapitools.org",
     url="",
-    keywords=["OpenAPI", "OpenAPI-Generator", "Torizon OTA"],
+    keywords=["OpenAPI", "OpenAPI-Generator", "Torizon OTA v2beta API"],
     install_requires=REQUIRES,
     packages=find_packages(exclude=["test", "tests"]),
     include_package_data=True,

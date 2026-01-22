@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**get_devices_uptane_deviceuuid_assignment**](DevicesApi.md#get_devices_uptane_deviceuuid_assignment) | **GET** /devices/uptane/{deviceUuid}/assignment | Show detailed information about the currently-assigned update for a single device
 [**get_devices_uptane_deviceuuid_components**](DevicesApi.md#get_devices_uptane_deviceuuid_components) | **GET** /devices/uptane/{deviceUuid}/components | Get a list of the software components reported by a single device
 [**post_devices**](DevicesApi.md#post_devices) | **POST** /devices | Manually create a new device
+[**post_devices_packages**](DevicesApi.md#post_devices_packages) | **POST** /devices/packages | Get information about the installed packages for many devices
 [**put_devices_hibernation_deviceuuid**](DevicesApi.md#put_devices_hibernation_deviceuuid) | **PUT** /devices/hibernation/{deviceUuid} | Set the hibernation status of a device
 [**put_devices_name_deviceuuid**](DevicesApi.md#put_devices_name_deviceuuid) | **PUT** /devices/name/{deviceUuid} | Set the display name of a single device
 [**put_devices_notes_deviceuuid**](DevicesApi.md#put_devices_notes_deviceuuid) | **PUT** /devices/notes/{deviceUuid} | Set the device notes for a specific device
@@ -103,12 +104,12 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_devices**
-> PaginationResultComToradexApiGwDataDeviceInfoBasic get_devices(offset=offset, limit=limit, device_uuid=device_uuid, device_id=device_id, name_contains=name_contains, hibernated=hibernated, status=status, activated_after=activated_after, activated_before=activated_before, last_seen_start=last_seen_start, last_seen_end=last_seen_end, created_at_start=created_at_start, created_at_end=created_at_end, hardware_ids=hardware_ids, sort_by=sort_by, sort_direction=sort_direction)
+> PaginationResultDeviceInfoBasic get_devices(offset=offset, limit=limit, device_uuid=device_uuid, device_id=device_id, name_contains=name_contains, hibernated=hibernated, status=status, activated_after=activated_after, activated_before=activated_before, last_seen_start=last_seen_start, last_seen_end=last_seen_end, created_at_start=created_at_start, created_at_end=created_at_end, hardware_ids=hardware_ids, tags=tags, sort_by=sort_by, sort_direction=sort_direction)
 
 Query device information
 
 
-Retrieves a list of devices in your repository. This endpoint has two different modes of operation. 
+Retrieves a list of devices in your repository. This endpoint has two different modes of operation.
 
 * You can specify `deviceId`s and/or `deviceUuid`s any number of times as query parameters, and all
 devices matching those ids will be returned.
@@ -123,6 +124,9 @@ filter parameters you specify will be returned. Available filter parameters:
     * `lastSeenEnd`
     * `createdAtStart`
     * `createdAtEnd`
+    * `tags`
+
+    When specifying `tags`, you cannot specify any other filter parameter. `tags` must have the format `<tagid>=<tag value>`
         
 
 ### Example
@@ -131,10 +135,7 @@ filter parameters you specify will be returned. Available filter parameters:
 
 ```python
 import torizon_io_api
-from torizon_io_api.models.device_sort import DeviceSort
-from torizon_io_api.models.device_sort_direction import DeviceSortDirection
-from torizon_io_api.models.device_status import DeviceStatus
-from torizon_io_api.models.pagination_result_com_toradex_api_gw_data_device_info_basic import PaginationResultComToradexApiGwDataDeviceInfoBasic
+from torizon_io_api.models.pagination_result_device_info_basic import PaginationResultDeviceInfoBasic
 from torizon_io_api.rest import ApiException
 from pprint import pprint
 
@@ -172,12 +173,13 @@ with torizon_io_api.ApiClient(configuration) as api_client:
     created_at_start = '2013-10-20T19:20:30+01:00' # datetime |  (optional)
     created_at_end = '2013-10-20T19:20:30+01:00' # datetime |  (optional)
     hardware_ids = ['hardware_ids_example'] # List[str] |  (optional)
+    tags = ['tags_example'] # List[str] |  (optional)
     sort_by = torizon_io_api.DeviceSort() # DeviceSort |  (optional)
     sort_direction = torizon_io_api.DeviceSortDirection() # DeviceSortDirection |  (optional)
 
     try:
         # Query device information
-        api_response = api_instance.get_devices(offset=offset, limit=limit, device_uuid=device_uuid, device_id=device_id, name_contains=name_contains, hibernated=hibernated, status=status, activated_after=activated_after, activated_before=activated_before, last_seen_start=last_seen_start, last_seen_end=last_seen_end, created_at_start=created_at_start, created_at_end=created_at_end, hardware_ids=hardware_ids, sort_by=sort_by, sort_direction=sort_direction)
+        api_response = api_instance.get_devices(offset=offset, limit=limit, device_uuid=device_uuid, device_id=device_id, name_contains=name_contains, hibernated=hibernated, status=status, activated_after=activated_after, activated_before=activated_before, last_seen_start=last_seen_start, last_seen_end=last_seen_end, created_at_start=created_at_start, created_at_end=created_at_end, hardware_ids=hardware_ids, tags=tags, sort_by=sort_by, sort_direction=sort_direction)
         print("The response of DevicesApi->get_devices:\n")
         pprint(api_response)
     except Exception as e:
@@ -205,12 +207,13 @@ Name | Type | Description  | Notes
  **created_at_start** | **datetime**|  | [optional] 
  **created_at_end** | **datetime**|  | [optional] 
  **hardware_ids** | [**List[str]**](str.md)|  | [optional] 
+ **tags** | [**List[str]**](str.md)|  | [optional] 
  **sort_by** | [**DeviceSort**](.md)|  | [optional] 
  **sort_direction** | [**DeviceSortDirection**](.md)|  | [optional] 
 
 ### Return type
 
-[**PaginationResultComToradexApiGwDataDeviceInfoBasic**](PaginationResultComToradexApiGwDataDeviceInfoBasic.md)
+[**PaginationResultDeviceInfoBasic**](PaginationResultDeviceInfoBasic.md)
 
 ### Authorization
 
@@ -402,7 +405,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_devices_network**
-> PaginationResultComToradexApiGwDataNetworkInfo get_devices_network(offset=offset, limit=limit, device_uuid=device_uuid)
+> PaginationResultNetworkInfo get_devices_network(offset=offset, limit=limit, device_uuid=device_uuid)
 
 Get network information for many devices
 
@@ -417,7 +420,7 @@ as a query parameter; if no devices are specified will return information for al
 
 ```python
 import torizon_io_api
-from torizon_io_api.models.pagination_result_com_toradex_api_gw_data_network_info import PaginationResultComToradexApiGwDataNetworkInfo
+from torizon_io_api.models.pagination_result_network_info import PaginationResultNetworkInfo
 from torizon_io_api.rest import ApiException
 from pprint import pprint
 
@@ -467,7 +470,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PaginationResultComToradexApiGwDataNetworkInfo**](PaginationResultComToradexApiGwDataNetworkInfo.md)
+[**PaginationResultNetworkInfo**](PaginationResultNetworkInfo.md)
 
 ### Authorization
 
@@ -651,7 +654,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_devices_packages**
-> PaginationResultComToradexApiGwDataDevicePackages get_devices_packages(offset=offset, limit=limit, device_uuid=device_uuid, name_contains=name_contains)
+> PaginationResultDevicePackages get_devices_packages(offset=offset, limit=limit, device_uuid=device_uuid, name_contains=name_contains)
 
 Get information about the installed packages for many devices
 
@@ -666,7 +669,7 @@ a query parameter; if no devices are specified will return information for all d
 
 ```python
 import torizon_io_api
-from torizon_io_api.models.pagination_result_com_toradex_api_gw_data_device_packages import PaginationResultComToradexApiGwDataDevicePackages
+from torizon_io_api.models.pagination_result_device_packages import PaginationResultDevicePackages
 from torizon_io_api.rest import ApiException
 from pprint import pprint
 
@@ -718,7 +721,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PaginationResultComToradexApiGwDataDevicePackages**](PaginationResultComToradexApiGwDataDevicePackages.md)
+[**PaginationResultDevicePackages**](PaginationResultDevicePackages.md)
 
 ### Authorization
 
@@ -1176,6 +1179,97 @@ Name | Type | Description  | Notes
 **400** | Bad Request |  -  |
 **404** | Resource Not Found |  -  |
 **409** | Conflict |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **post_devices_packages**
+> PaginationResultDevicePackages post_devices_packages(offset=offset, limit=limit, device_packages_search_params=device_packages_search_params)
+
+Get information about the installed packages for many devices
+
+
+Returns a list of devices and the packages those devices have installed. A list of devices can be specified
+using the request body; if no devices are specified will return information for all devices in the repository.
+
+The number of provided deviceUuids in the request body is limited to 100
+        
+
+### Example
+
+* Bearer Authentication (BearerAuth):
+
+```python
+import torizon_io_api
+from torizon_io_api.models.device_packages_search_params import DevicePackagesSearchParams
+from torizon_io_api.models.pagination_result_device_packages import PaginationResultDevicePackages
+from torizon_io_api.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://app.torizon.io/api/v2beta
+# See configuration.py for a list of all supported configuration parameters.
+configuration = torizon_io_api.Configuration(
+    host = "https://app.torizon.io/api/v2beta"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: BearerAuth
+configuration = torizon_io_api.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with torizon_io_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = torizon_io_api.DevicesApi(api_client)
+    offset = 56 # int |  (optional)
+    limit = 56 # int |  (optional)
+    device_packages_search_params = torizon_io_api.DevicePackagesSearchParams() # DevicePackagesSearchParams |  (optional)
+
+    try:
+        # Get information about the installed packages for many devices
+        api_response = api_instance.post_devices_packages(offset=offset, limit=limit, device_packages_search_params=device_packages_search_params)
+        print("The response of DevicesApi->post_devices_packages:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DevicesApi->post_devices_packages: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **offset** | **int**|  | [optional] 
+ **limit** | **int**|  | [optional] 
+ **device_packages_search_params** | [**DevicePackagesSearchParams**](DevicePackagesSearchParams.md)|  | [optional] 
+
+### Return type
+
+[**PaginationResultDevicePackages**](PaginationResultDevicePackages.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** |  |  -  |
+**400** | Bad Request |  -  |
+**404** | Resource Not Found |  -  |
+**416** | Range not Satisfiable |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

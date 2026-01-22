@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -54,10 +54,17 @@ class TestUpdatesApi(unittest.TestCase):
         """
         pass
 
-    def test_patch_updates(self) -> None:
-        """Test case for patch_updates
+    def test_get_updates_devices_deviceid(self) -> None:
+        """Test case for get_updates_devices_deviceid
 
-        Cancel a pending update for one or more devices
+        list updates
+        """
+        pass
+
+    def test_patch_updates_updateid(self) -> None:
+        """Test case for patch_updates_updateid
+
+        Cancel an update
         """
         pass
 

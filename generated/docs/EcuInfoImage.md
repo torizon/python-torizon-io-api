@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **filepath** | **str** |  | 
 **size** | **int** |  | 
-**hash** | **str** |  | 
+**hash** | [**Hashes**](Hashes.md) |  | 
 
 ## Example
 

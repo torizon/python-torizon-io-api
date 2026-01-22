@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -16,15 +16,15 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
-from typing import List
+from pydantic import StrictInt, StrictStr
+from typing import List, Optional
 from torizon_io_api.models.create_session_request import CreateSessionRequest
 from torizon_io_api.models.device_info import DeviceInfo
 from torizon_io_api.models.device_session import DeviceSession
 from torizon_io_api.models.ip_address_request import IpAddressRequest
 from torizon_io_api.models.key_data import KeyData
+from torizon_io_api.models.pagination_result_user_session import PaginationResultUserSession
 from torizon_io_api.models.public_keys import PublicKeys
-from torizon_io_api.models.user_session import UserSession
 
 from torizon_io_api.api_client import ApiClient, RequestSerialized
 from torizon_io_api.api_response import ApiResponse
@@ -1865,6 +1865,8 @@ class RemoteAccessApi:
     @validate_call
     def get_remote_access_user_sessions(
         self,
+        offset: Optional[StrictInt] = None,
+        limit: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1877,11 +1879,15 @@ class RemoteAccessApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[UserSession]:
+    ) -> PaginationResultUserSession:
         """Fetch all sessions (and their related deviceId) for a user
 
                  
 
+        :param offset:
+        :type offset: int
+        :param limit:
+        :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1905,6 +1911,8 @@ class RemoteAccessApi:
         """ # noqa: E501
 
         _param = self._get_remote_access_user_sessions_serialize(
+            offset=offset,
+            limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1912,7 +1920,8 @@ class RemoteAccessApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[UserSession]",
+            '200': "PaginationResultUserSession",
+            '400': "str",
             '404': "NotFoundRepr",
         }
         response_data = self.api_client.call_api(
@@ -1929,6 +1938,8 @@ class RemoteAccessApi:
     @validate_call
     def get_remote_access_user_sessions_with_http_info(
         self,
+        offset: Optional[StrictInt] = None,
+        limit: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1941,11 +1952,15 @@ class RemoteAccessApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[UserSession]]:
+    ) -> ApiResponse[PaginationResultUserSession]:
         """Fetch all sessions (and their related deviceId) for a user
 
                  
 
+        :param offset:
+        :type offset: int
+        :param limit:
+        :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1969,6 +1984,8 @@ class RemoteAccessApi:
         """ # noqa: E501
 
         _param = self._get_remote_access_user_sessions_serialize(
+            offset=offset,
+            limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1976,7 +1993,8 @@ class RemoteAccessApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[UserSession]",
+            '200': "PaginationResultUserSession",
+            '400': "str",
             '404': "NotFoundRepr",
         }
         response_data = self.api_client.call_api(
@@ -1993,6 +2011,8 @@ class RemoteAccessApi:
     @validate_call
     def get_remote_access_user_sessions_without_preload_content(
         self,
+        offset: Optional[StrictInt] = None,
+        limit: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2010,6 +2030,10 @@ class RemoteAccessApi:
 
                  
 
+        :param offset:
+        :type offset: int
+        :param limit:
+        :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2033,6 +2057,8 @@ class RemoteAccessApi:
         """ # noqa: E501
 
         _param = self._get_remote_access_user_sessions_serialize(
+            offset=offset,
+            limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2040,7 +2066,8 @@ class RemoteAccessApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[UserSession]",
+            '200': "PaginationResultUserSession",
+            '400': "str",
             '404': "NotFoundRepr",
         }
         response_data = self.api_client.call_api(
@@ -2052,6 +2079,8 @@ class RemoteAccessApi:
 
     def _get_remote_access_user_sessions_serialize(
         self,
+        offset,
+        limit,
         _request_auth,
         _content_type,
         _headers,
@@ -2074,6 +2103,14 @@ class RemoteAccessApi:
 
         # process the path parameters
         # process the query parameters
+        if offset is not None:
+            
+            _query_params.append(('offset', offset))
+            
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -2083,7 +2120,8 @@ class RemoteAccessApi:
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [
-                    'application/json'
+                    'application/json', 
+                    'text/plain'
                 ]
             )
 

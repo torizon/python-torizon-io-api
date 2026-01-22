@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -25,26 +25,9 @@ class TestTimeAggregationMethod(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> TimeAggregationMethod:
-        """Test TimeAggregationMethod
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        # uncomment below to create an instance of `TimeAggregationMethod`
-        """
-        model = TimeAggregationMethod()
-        if include_optional:
-            return TimeAggregationMethod(
-            )
-        else:
-            return TimeAggregationMethod(
-        )
-        """
-
     def testTimeAggregationMethod(self):
         """Test TimeAggregationMethod"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        # inst = TimeAggregationMethod()
 
 if __name__ == '__main__':
     unittest.main()

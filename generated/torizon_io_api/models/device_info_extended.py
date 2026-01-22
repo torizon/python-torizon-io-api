@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -18,14 +18,14 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from uuid import UUID
-from torizon_io_api.models.device_package import DevicePackage
 from torizon_io_api.models.device_status import DeviceStatus
 from torizon_io_api.models.fleet import Fleet
+from torizon_io_api.models.installed_package import InstalledPackage
 from torizon_io_api.models.network_info import NetworkInfo
-from torizon_io_api.models.tuple2_com_toradex_api_gw_data_device_tag_id_com_toradex_api_gw_data_device_tag_value import Tuple2ComToradexApiGwDataDeviceTagIdComToradexApiGwDataDeviceTagValue
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -44,10 +44,10 @@ class DeviceInfoExtended(BaseModel):
     hibernated: StrictBool
     last_updated: Optional[datetime] = Field(default=None, alias="lastUpdated")
     device_fleets: Optional[List[Fleet]] = Field(default=None, alias="deviceFleets")
-    device_packages: Optional[List[DevicePackage]] = Field(default=None, alias="devicePackages")
-    device_tags: Optional[List[Tuple2ComToradexApiGwDataDeviceTagIdComToradexApiGwDataDeviceTagValue]] = Field(default=None, alias="deviceTags")
+    device_packages: Optional[List[InstalledPackage]] = Field(default=None, alias="devicePackages")
+    tags: Dict[str, Annotated[str, Field(strict=True, max_length=254)]]
     network_info: NetworkInfo = Field(alias="networkInfo")
-    __properties: ClassVar[List[str]] = ["deviceUuid", "deviceName", "deviceId", "lastSeen", "createdAt", "activatedAt", "deviceStatus", "notes", "hibernated", "lastUpdated", "deviceFleets", "devicePackages", "deviceTags", "networkInfo"]
+    __properties: ClassVar[List[str]] = ["deviceUuid", "deviceName", "deviceId", "lastSeen", "createdAt", "activatedAt", "deviceStatus", "notes", "hibernated", "lastUpdated", "deviceFleets", "devicePackages", "tags", "networkInfo"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -102,13 +102,6 @@ class DeviceInfoExtended(BaseModel):
                 if _item_device_packages:
                     _items.append(_item_device_packages.to_dict())
             _dict['devicePackages'] = _items
-        # override the default output from pydantic by calling `to_dict()` of each item in device_tags (list)
-        _items = []
-        if self.device_tags:
-            for _item_device_tags in self.device_tags:
-                if _item_device_tags:
-                    _items.append(_item_device_tags.to_dict())
-            _dict['deviceTags'] = _items
         # override the default output from pydantic by calling `to_dict()` of network_info
         if self.network_info:
             _dict['networkInfo'] = self.network_info.to_dict()
@@ -150,8 +143,8 @@ class DeviceInfoExtended(BaseModel):
             "hibernated": obj.get("hibernated"),
             "lastUpdated": obj.get("lastUpdated"),
             "deviceFleets": [Fleet.from_dict(_item) for _item in obj["deviceFleets"]] if obj.get("deviceFleets") is not None else None,
-            "devicePackages": [DevicePackage.from_dict(_item) for _item in obj["devicePackages"]] if obj.get("devicePackages") is not None else None,
-            "deviceTags": [Tuple2ComToradexApiGwDataDeviceTagIdComToradexApiGwDataDeviceTagValue.from_dict(_item) for _item in obj["deviceTags"]] if obj.get("deviceTags") is not None else None,
+            "devicePackages": [InstalledPackage.from_dict(_item) for _item in obj["devicePackages"]] if obj.get("devicePackages") is not None else None,
+            "tags": obj.get("tags"),
             "networkInfo": NetworkInfo.from_dict(obj["networkInfo"]) if obj.get("networkInfo") is not None else None
         })
         return _obj

@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -18,9 +18,9 @@ from typing_extensions import Annotated
 
 from pydantic import StrictInt, StrictStr
 from typing import Dict, List, Optional
-from uuid import UUID
 from torizon_io_api.models.create_lockbox_request import CreateLockboxRequest
 from torizon_io_api.models.json_signed_payload import JsonSignedPayload
+from torizon_io_api.models.pagination_result_update_response import PaginationResultUpdateResponse
 from torizon_io_api.models.update_create_result import UpdateCreateResult
 from torizon_io_api.models.update_request import UpdateRequest
 
@@ -357,7 +357,7 @@ class UpdatesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, JsonSignedPayload]",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
         }
         response_data = self.api_client.call_api(
@@ -422,7 +422,7 @@ class UpdatesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, JsonSignedPayload]",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
         }
         response_data = self.api_client.call_api(
@@ -487,7 +487,7 @@ class UpdatesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Dict[str, JsonSignedPayload]",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
         }
         response_data = self.api_client.call_api(
@@ -609,7 +609,7 @@ class UpdatesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[str]",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
         }
         response_data = self.api_client.call_api(
@@ -674,7 +674,7 @@ class UpdatesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[str]",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
         }
         response_data = self.api_client.call_api(
@@ -739,7 +739,7 @@ class UpdatesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[str]",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
         }
         response_data = self.api_client.call_api(
@@ -869,7 +869,7 @@ class UpdatesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "JsonSignedPayload",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
         }
         response_data = self.api_client.call_api(
@@ -942,7 +942,7 @@ class UpdatesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "JsonSignedPayload",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
         }
         response_data = self.api_client.call_api(
@@ -1015,7 +1015,7 @@ class UpdatesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "JsonSignedPayload",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
         }
         response_data = self.api_client.call_api(
@@ -1095,9 +1095,11 @@ class UpdatesApi:
 
 
     @validate_call
-    def patch_updates(
+    def get_updates_devices_deviceid(
         self,
-        request_body: Optional[List[UUID]] = None,
+        device_id: StrictStr,
+        offset: Optional[StrictInt] = None,
+        limit: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1110,13 +1112,17 @@ class UpdatesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[UUID]:
-        """Cancel a pending update for one or more devices
+    ) -> PaginationResultUpdateResponse:
+        """list updates
 
-         Cancels any pending update for a list of devices. Note that this endpoint does not accept fleet UUIDs, only device UUIDs.  Updates can only be cancelled when they are Pending. After the device has received its update instructions, the update can no longer be cancelled from the server side.         
+         List all updates created a specific device               
 
-        :param request_body:
-        :type request_body: List[UUID]
+        :param device_id: (required)
+        :type device_id: str
+        :param offset:
+        :type offset: int
+        :param limit:
+        :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1139,8 +1145,10 @@ class UpdatesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._patch_updates_serialize(
-            request_body=request_body,
+        _param = self._get_updates_devices_deviceid_serialize(
+            device_id=device_id,
+            offset=offset,
+            limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1148,9 +1156,8 @@ class UpdatesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[UUID]",
-            '400': "UpstreamEndpointErrorRepr",
-            '416': "RangeNotSatisfiableRepr",
+            '200': "PaginationResultUpdateResponse",
+            '400': "BadRequestRepr",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1164,9 +1171,11 @@ class UpdatesApi:
 
 
     @validate_call
-    def patch_updates_with_http_info(
+    def get_updates_devices_deviceid_with_http_info(
         self,
-        request_body: Optional[List[UUID]] = None,
+        device_id: StrictStr,
+        offset: Optional[StrictInt] = None,
+        limit: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1179,13 +1188,17 @@ class UpdatesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[UUID]]:
-        """Cancel a pending update for one or more devices
+    ) -> ApiResponse[PaginationResultUpdateResponse]:
+        """list updates
 
-         Cancels any pending update for a list of devices. Note that this endpoint does not accept fleet UUIDs, only device UUIDs.  Updates can only be cancelled when they are Pending. After the device has received its update instructions, the update can no longer be cancelled from the server side.         
+         List all updates created a specific device               
 
-        :param request_body:
-        :type request_body: List[UUID]
+        :param device_id: (required)
+        :type device_id: str
+        :param offset:
+        :type offset: int
+        :param limit:
+        :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1208,8 +1221,10 @@ class UpdatesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._patch_updates_serialize(
-            request_body=request_body,
+        _param = self._get_updates_devices_deviceid_serialize(
+            device_id=device_id,
+            offset=offset,
+            limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1217,9 +1232,8 @@ class UpdatesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[UUID]",
-            '400': "UpstreamEndpointErrorRepr",
-            '416': "RangeNotSatisfiableRepr",
+            '200': "PaginationResultUpdateResponse",
+            '400': "BadRequestRepr",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1233,9 +1247,11 @@ class UpdatesApi:
 
 
     @validate_call
-    def patch_updates_without_preload_content(
+    def get_updates_devices_deviceid_without_preload_content(
         self,
-        request_body: Optional[List[UUID]] = None,
+        device_id: StrictStr,
+        offset: Optional[StrictInt] = None,
+        limit: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1249,12 +1265,16 @@ class UpdatesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Cancel a pending update for one or more devices
+        """list updates
 
-         Cancels any pending update for a list of devices. Note that this endpoint does not accept fleet UUIDs, only device UUIDs.  Updates can only be cancelled when they are Pending. After the device has received its update instructions, the update can no longer be cancelled from the server side.         
+         List all updates created a specific device               
 
-        :param request_body:
-        :type request_body: List[UUID]
+        :param device_id: (required)
+        :type device_id: str
+        :param offset:
+        :type offset: int
+        :param limit:
+        :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1277,8 +1297,10 @@ class UpdatesApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._patch_updates_serialize(
-            request_body=request_body,
+        _param = self._get_updates_devices_deviceid_serialize(
+            device_id=device_id,
+            offset=offset,
+            limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1286,9 +1308,8 @@ class UpdatesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "List[UUID]",
-            '400': "UpstreamEndpointErrorRepr",
-            '416': "RangeNotSatisfiableRepr",
+            '200': "PaginationResultUpdateResponse",
+            '400': "BadRequestRepr",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1297,9 +1318,11 @@ class UpdatesApi:
         return response_data.response
 
 
-    def _patch_updates_serialize(
+    def _get_updates_devices_deviceid_serialize(
         self,
-        request_body,
+        device_id,
+        offset,
+        limit,
         _request_auth,
         _content_type,
         _headers,
@@ -1309,7 +1332,6 @@ class UpdatesApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'request_body': '',
         }
 
         _path_params: Dict[str, str] = {}
@@ -1322,12 +1344,20 @@ class UpdatesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
+        if device_id is not None:
+            _path_params['deviceId'] = device_id
         # process the query parameters
+        if offset is not None:
+            
+            _query_params.append(('offset', offset))
+            
+        if limit is not None:
+            
+            _query_params.append(('limit', limit))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if request_body is not None:
-            _body_params = request_body
 
 
         # set the HTTP header `Accept`
@@ -1338,19 +1368,273 @@ class UpdatesApi:
                 ]
             )
 
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params['Content-Type'] = _content_type
-        else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'BearerAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/updates/devices/{deviceId}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def patch_updates_updateid(
+        self,
+        update_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> None:
+        """Cancel an update
+
+         Cancels the update  Updates can only be cancelled when they are Pending. After the device has received its update instructions, the update can no longer be cancelled from the server side.         
+
+        :param update_id: (required)
+        :type update_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._patch_updates_updateid_serialize(
+            update_id=update_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': None,
+            '400': "BadRequestRepr",
+            '409': "ConflictRepr",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def patch_updates_updateid_with_http_info(
+        self,
+        update_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[None]:
+        """Cancel an update
+
+         Cancels the update  Updates can only be cancelled when they are Pending. After the device has received its update instructions, the update can no longer be cancelled from the server side.         
+
+        :param update_id: (required)
+        :type update_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._patch_updates_updateid_serialize(
+            update_id=update_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': None,
+            '400': "BadRequestRepr",
+            '409': "ConflictRepr",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def patch_updates_updateid_without_preload_content(
+        self,
+        update_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Cancel an update
+
+         Cancels the update  Updates can only be cancelled when they are Pending. After the device has received its update instructions, the update can no longer be cancelled from the server side.         
+
+        :param update_id: (required)
+        :type update_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._patch_updates_updateid_serialize(
+            update_id=update_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': None,
+            '400': "BadRequestRepr",
+            '409': "ConflictRepr",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _patch_updates_updateid_serialize(
+        self,
+        update_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if update_id is not None:
+            _path_params['updateId'] = update_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
             )
-            if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
+
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1359,7 +1643,7 @@ class UpdatesApi:
 
         return self.api_client.param_serialize(
             method='PATCH',
-            resource_path='/updates',
+            resource_path='/updates/{updateId}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1434,7 +1718,7 @@ class UpdatesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
         }
         response_data = self.api_client.call_api(
@@ -1507,7 +1791,7 @@ class UpdatesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
         }
         response_data = self.api_client.call_api(
@@ -1580,7 +1864,7 @@ class UpdatesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': None,
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
         }
         response_data = self.api_client.call_api(
@@ -1725,7 +2009,7 @@ class UpdatesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "UpdateCreateResult",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '416': "RangeNotSatisfiableRepr",
         }
         response_data = self.api_client.call_api(
@@ -1794,7 +2078,7 @@ class UpdatesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "UpdateCreateResult",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '416': "RangeNotSatisfiableRepr",
         }
         response_data = self.api_client.call_api(
@@ -1863,7 +2147,7 @@ class UpdatesApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "UpdateCreateResult",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '416': "RangeNotSatisfiableRepr",
         }
         response_data = self.api_client.call_api(

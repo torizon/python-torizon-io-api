@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -91,7 +91,7 @@ class ApiClient:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = 'OpenAPI-Generator/0.0.5/python'
+        self.user_agent = 'OpenAPI-Generator/0.0.6/python'
         self.client_side_validation = configuration.client_side_validation
 
     def __enter__(self):
@@ -312,7 +312,7 @@ class ApiClient:
                 return_data = self.__deserialize_file(response_data)
             elif response_type is not None:
                 match = None
-                content_type = response_data.getheader('content-type')
+                content_type = response_data.headers.get('content-type')
                 if content_type is not None:
                     match = re.search(r"charset=([a-zA-Z\-\d]+)[\s;]?", content_type)
                 encoding = match.group(1) if match else "utf-8"
@@ -329,7 +329,7 @@ class ApiClient:
         return ApiResponse(
             status_code = response_data.status,
             data = return_data,
-            headers = response_data.getheaders(),
+            headers = response_data.headers,
             raw_data = response_data.data
         )
 
@@ -701,7 +701,7 @@ class ApiClient:
         os.close(fd)
         os.remove(path)
 
-        content_disposition = response.getheader("Content-Disposition")
+        content_disposition = response.headers.get("Content-Disposition")
         if content_disposition:
             m = re.search(
                 r'filename=[\'"]?([^\'"\s]+)[\'"]?',

@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List
-from torizon_io_api.models.package_info import PackageInfo
+from torizon_io_api.models.package import Package
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class InstalledPackage(BaseModel):
     InstalledPackage
     """ # noqa: E501
     component: StrictStr
-    installed: PackageInfo
+    installed: Package
     __properties: ClassVar[List[str]] = ["component", "installed"]
 
     model_config = ConfigDict(
@@ -86,7 +86,7 @@ class InstalledPackage(BaseModel):
 
         _obj = cls.model_validate({
             "component": obj.get("component"),
-            "installed": PackageInfo.from_dict(obj["installed"]) if obj.get("installed") is not None else None
+            "installed": Package.from_dict(obj["installed"]) if obj.get("installed") is not None else None
         })
         return _obj
 

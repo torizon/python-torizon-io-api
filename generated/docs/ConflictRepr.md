@@ -6,9 +6,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **msg** | **str** |  | 
-**description** | **object** |  | [optional] 
+**description** | [**AnyOf**](AnyOf.md) |  | [optional] 
 **code** | **str** |  | 
-**cause** | **object** |  | [optional] 
+**cause** | [**AnyOf**](AnyOf.md) |  | [optional] 
 **error_id** | **UUID** |  | [optional] 
 
 ## Example

@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List
+from typing_extensions import Annotated
 from torizon_io_api.models.ecu_info_image import EcuInfoImage
 from typing import Optional, Set
 from typing_extensions import Self
@@ -27,7 +28,7 @@ class EcuInfoResponse(BaseModel):
     """
     EcuInfoResponse
     """ # noqa: E501
-    id: StrictStr
+    id: Annotated[str, Field(min_length=1, strict=True, max_length=64)]
     hardware_id: StrictStr = Field(alias="hardwareId")
     primary: StrictBool
     image: EcuInfoImage

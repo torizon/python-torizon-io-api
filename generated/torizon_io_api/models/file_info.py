@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -17,8 +17,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictInt
 from typing import Any, ClassVar, Dict, List
+from torizon_io_api.models.hashes import Hashes
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -26,7 +27,7 @@ class FileInfo(BaseModel):
     """
     FileInfo
     """ # noqa: E501
-    hashes: StrictStr
+    hashes: Hashes
     length: StrictInt
     __properties: ClassVar[List[str]] = ["hashes", "length"]
 
@@ -69,6 +70,9 @@ class FileInfo(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of hashes
+        if self.hashes:
+            _dict['hashes'] = self.hashes.to_dict()
         return _dict
 
     @classmethod
@@ -81,7 +85,7 @@ class FileInfo(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "hashes": obj.get("hashes"),
+            "hashes": Hashes.from_dict(obj["hashes"]) if obj.get("hashes") is not None else None,
             "length": obj.get("length")
         })
         return _obj

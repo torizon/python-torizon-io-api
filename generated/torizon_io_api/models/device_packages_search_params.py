@@ -20,6 +20,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
+from uuid import UUID
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,7 +28,7 @@ class DevicePackagesSearchParams(BaseModel):
     """
     DevicePackagesSearchParams
     """ # noqa: E501
-    device_uuids: Optional[Annotated[List[StrictStr], Field(max_length=100)]] = Field(default=None, alias="deviceUuids")
+    device_uuids: Optional[Annotated[List[UUID], Field(max_length=100)]] = Field(default=None, alias="deviceUuids")
     name_contains: Optional[StrictStr] = Field(default=None, alias="nameContains")
     __properties: ClassVar[List[str]] = ["deviceUuids", "nameContains"]
 

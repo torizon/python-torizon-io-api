@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -24,7 +24,7 @@ from torizon_io_api.models.detailed_metric_query import DetailedMetricQuery
 from torizon_io_api.models.fleet_metrics_outliers_request import FleetMetricsOutliersRequest
 from torizon_io_api.models.fleet_metrics_outliers_response import FleetMetricsOutliersResponse
 from torizon_io_api.models.metrics_response import MetricsResponse
-from torizon_io_api.models.pagination_result_java_lang_string import PaginationResultJavaLangString
+from torizon_io_api.models.pagination_result_string import PaginationResultString
 
 from torizon_io_api.api_client import ApiClient, RequestSerialized
 from torizon_io_api.api_response import ApiResponse
@@ -119,7 +119,7 @@ class DeviceMetricsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MetricsResponse",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '416': "RangeNotSatisfiableRepr",
         }
         response_data = self.api_client.call_api(
@@ -208,7 +208,7 @@ class DeviceMetricsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MetricsResponse",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '416': "RangeNotSatisfiableRepr",
         }
         response_data = self.api_client.call_api(
@@ -297,7 +297,7 @@ class DeviceMetricsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MetricsResponse",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '416': "RangeNotSatisfiableRepr",
         }
         response_data = self.api_client.call_api(
@@ -469,7 +469,7 @@ class DeviceMetricsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MetricsResponse",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
             '416': "RangeNotSatisfiableRepr",
         }
@@ -555,7 +555,7 @@ class DeviceMetricsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MetricsResponse",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
             '416': "RangeNotSatisfiableRepr",
         }
@@ -641,7 +641,7 @@ class DeviceMetricsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MetricsResponse",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
             '416': "RangeNotSatisfiableRepr",
         }
@@ -808,7 +808,7 @@ class DeviceMetricsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MetricsResponse",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '416': "RangeNotSatisfiableRepr",
         }
         response_data = self.api_client.call_api(
@@ -893,7 +893,7 @@ class DeviceMetricsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MetricsResponse",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '416': "RangeNotSatisfiableRepr",
         }
         response_data = self.api_client.call_api(
@@ -978,7 +978,7 @@ class DeviceMetricsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MetricsResponse",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '416': "RangeNotSatisfiableRepr",
         }
         response_data = self.api_client.call_api(
@@ -1090,7 +1090,7 @@ class DeviceMetricsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PaginationResultJavaLangString:
+    ) -> PaginationResultString:
         """Get the list of metrics available in your repository
 
          Lists the metrics available in your repository.  In the default TorizonCore configuration, devices will report certain default metrics. You can also add your own metrics, as described in the [TorizonCore documentation](https://developer.toradex.com/torizon/torizon-platform/device-monitoring-in-torizoncore/#customizing-device-metrics-for-torizon-platform). Calling this endpoint will give you the list of valid metric names for your repository; generally this will include the default set plus any that you have defined yourself.  You can optionally specify a time interval in Unix Epoch milliseconds via the `from` and `to` query parameters. This will return the list of metrics reported by devices in your repository during that specific interval.         
@@ -1131,8 +1131,8 @@ class DeviceMetricsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginationResultJavaLangString",
-            '400': "UpstreamEndpointErrorRepr",
+            '200': "PaginationResultString",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
             '416': "RangeNotSatisfiableRepr",
         }
@@ -1164,7 +1164,7 @@ class DeviceMetricsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[PaginationResultJavaLangString]:
+    ) -> ApiResponse[PaginationResultString]:
         """Get the list of metrics available in your repository
 
          Lists the metrics available in your repository.  In the default TorizonCore configuration, devices will report certain default metrics. You can also add your own metrics, as described in the [TorizonCore documentation](https://developer.toradex.com/torizon/torizon-platform/device-monitoring-in-torizoncore/#customizing-device-metrics-for-torizon-platform). Calling this endpoint will give you the list of valid metric names for your repository; generally this will include the default set plus any that you have defined yourself.  You can optionally specify a time interval in Unix Epoch milliseconds via the `from` and `to` query parameters. This will return the list of metrics reported by devices in your repository during that specific interval.         
@@ -1205,8 +1205,8 @@ class DeviceMetricsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginationResultJavaLangString",
-            '400': "UpstreamEndpointErrorRepr",
+            '200': "PaginationResultString",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
             '416': "RangeNotSatisfiableRepr",
         }
@@ -1279,8 +1279,8 @@ class DeviceMetricsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginationResultJavaLangString",
-            '400': "UpstreamEndpointErrorRepr",
+            '200': "PaginationResultString",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
             '416': "RangeNotSatisfiableRepr",
         }
@@ -1421,7 +1421,7 @@ class DeviceMetricsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FleetMetricsOutliersResponse",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
             '416': "RangeNotSatisfiableRepr",
         }
@@ -1495,7 +1495,7 @@ class DeviceMetricsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FleetMetricsOutliersResponse",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
             '416': "RangeNotSatisfiableRepr",
         }
@@ -1569,7 +1569,7 @@ class DeviceMetricsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "FleetMetricsOutliersResponse",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
             '416': "RangeNotSatisfiableRepr",
         }
@@ -1719,7 +1719,7 @@ class DeviceMetricsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MetricsResponse",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
             '416': "RangeNotSatisfiableRepr",
         }
@@ -1793,7 +1793,7 @@ class DeviceMetricsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MetricsResponse",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
             '416': "RangeNotSatisfiableRepr",
         }
@@ -1867,7 +1867,7 @@ class DeviceMetricsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MetricsResponse",
-            '400': "UpstreamEndpointErrorRepr",
+            '400': "PostUpdates400Response",
             '404': "NotFoundRepr",
             '416': "RangeNotSatisfiableRepr",
         }

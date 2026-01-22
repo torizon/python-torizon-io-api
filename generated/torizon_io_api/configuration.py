@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -164,7 +164,7 @@ class Configuration:
     :param ca_cert_data: verify the peer using concatenated CA certificate data
       in PEM (str) or DER (bytes) format.
     :param cert_file: the path to a client certificate file, for mTLS.
-    :param key_file: the path to a client key file, for mTLS. 
+    :param key_file: the path to a client key file, for mTLS.
 
     :Example:
     """
@@ -486,6 +486,7 @@ class Configuration:
         password = ""
         if self.password is not None:
             password = self.password
+
         return urllib3.util.make_headers(
             basic_auth=username + ':' + password
         ).get('authorization')
@@ -514,7 +515,7 @@ class Configuration:
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 2.0-Beta\n"\
-               "SDK Package Version: 0.0.5".\
+               "SDK Package Version: 0.0.6".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:
@@ -562,6 +563,7 @@ class Configuration:
                 variable_name, variable['default_value'])
 
             if 'enum_values' in variable \
+                    and variable['enum_values'] \
                     and used_value not in variable['enum_values']:
                 raise ValueError(
                     "The variable `{0}` in the host URL has invalid value "

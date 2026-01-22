@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -33,7 +33,7 @@ class Package(BaseModel):
     package_id: StrictStr = Field(alias="packageId")
     size: StrictInt
     hashes: Dict[str, StrictStr]
-    package_source: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(default=None, alias="packageSource")
+    package_source: Annotated[str, Field(min_length=1, strict=True)] = Field(alias="packageSource")
     pkg_type: Optional[StrictStr] = Field(default=None, alias="pkgType")
     hardware_ids: Optional[List[StrictStr]] = Field(default=None, alias="hardwareIds")
     created_at: Optional[datetime] = Field(default=None, alias="createdAt")
@@ -81,11 +81,9 @@ class Package(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if package_source (nullable) is None
-        # and model_fields_set contains the field
-        if self.package_source is None and "package_source" in self.model_fields_set:
-            _dict['packageSource'] = None
-
+        # override the default output from pydantic by calling `to_dict()` of proprietary_meta
+        if self.proprietary_meta:
+            _dict['proprietaryMeta'] = self.proprietary_meta.to_dict()
         # set to None if pkg_type (nullable) is None
         # and model_fields_set contains the field
         if self.pkg_type is None and "pkg_type" in self.model_fields_set:
@@ -133,7 +131,7 @@ class Package(BaseModel):
             "hardwareIds": obj.get("hardwareIds"),
             "createdAt": obj.get("createdAt"),
             "uri": obj.get("uri"),
-            "proprietaryMeta": obj.get("proprietaryMeta"),
+            "proprietaryMeta": AnyOf.from_dict(obj["proprietaryMeta"]) if obj.get("proprietaryMeta") is not None else None,
             "comment": obj.get("comment")
         })
         return _obj

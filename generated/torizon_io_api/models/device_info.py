@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -87,10 +87,20 @@ class DeviceInfo(BaseModel):
         if self.last_api_connect is None and "last_api_connect" in self.model_fields_set:
             _dict['lastApiConnect'] = None
 
+        # set to None if last_ssh_session_connect (nullable) is None
+        # and model_fields_set contains the field
+        if self.last_ssh_session_connect is None and "last_ssh_session_connect" in self.model_fields_set:
+            _dict['lastSshSessionConnect'] = None
+
         # set to None if last_version (nullable) is None
         # and model_fields_set contains the field
         if self.last_version is None and "last_version" in self.model_fields_set:
             _dict['lastVersion'] = None
+
+        # set to None if last_user_connect (nullable) is None
+        # and model_fields_set contains the field
+        if self.last_user_connect is None and "last_user_connect" in self.model_fields_set:
+            _dict['lastUserConnect'] = None
 
         return _dict
 

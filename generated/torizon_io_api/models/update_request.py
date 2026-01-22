@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -80,6 +80,11 @@ class UpdateRequest(BaseModel):
                 if self.custom[_key_custom]:
                     _field_dict[_key_custom] = self.custom[_key_custom].to_dict()
             _dict['custom'] = _field_dict
+        # set to None if custom (nullable) is None
+        # and model_fields_set contains the field
+        if self.custom is None and "custom" in self.model_fields_set:
+            _dict['custom'] = None
+
         # set to None if devices (nullable) is None
         # and model_fields_set contains the field
         if self.devices is None and "devices" in self.model_fields_set:

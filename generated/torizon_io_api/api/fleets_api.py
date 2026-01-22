@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -21,8 +21,8 @@ from typing import List, Optional
 from uuid import UUID
 from torizon_io_api.models.create_fleet import CreateFleet
 from torizon_io_api.models.fleet import Fleet
-from torizon_io_api.models.pagination_result_com_toradex_api_gw_data_device_info_basic import PaginationResultComToradexApiGwDataDeviceInfoBasic
-from torizon_io_api.models.pagination_result_com_toradex_api_gw_data_fleet import PaginationResultComToradexApiGwDataFleet
+from torizon_io_api.models.pagination_result_device_info_basic import PaginationResultDeviceInfoBasic
+from torizon_io_api.models.pagination_result_fleet import PaginationResultFleet
 from torizon_io_api.models.update_fleet import UpdateFleet
 
 from torizon_io_api.api_client import ApiClient, RequestSerialized
@@ -626,7 +626,7 @@ class FleetsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PaginationResultComToradexApiGwDataFleet:
+    ) -> PaginationResultFleet:
         """Get information about all fleets in your repository
 
          Returns a list of fleets along with their UUIDs.         
@@ -667,7 +667,7 @@ class FleetsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginationResultComToradexApiGwDataFleet",
+            '200': "PaginationResultFleet",
             '400': "BadRequestRepr",
         }
         response_data = self.api_client.call_api(
@@ -698,7 +698,7 @@ class FleetsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[PaginationResultComToradexApiGwDataFleet]:
+    ) -> ApiResponse[PaginationResultFleet]:
         """Get information about all fleets in your repository
 
          Returns a list of fleets along with their UUIDs.         
@@ -739,7 +739,7 @@ class FleetsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginationResultComToradexApiGwDataFleet",
+            '200': "PaginationResultFleet",
             '400': "BadRequestRepr",
         }
         response_data = self.api_client.call_api(
@@ -811,7 +811,7 @@ class FleetsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginationResultComToradexApiGwDataFleet",
+            '200': "PaginationResultFleet",
             '400': "BadRequestRepr",
         }
         response_data = self.api_client.call_api(
@@ -1177,7 +1177,7 @@ class FleetsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PaginationResultComToradexApiGwDataDeviceInfoBasic:
+    ) -> PaginationResultDeviceInfoBasic:
         """Get information about the devices in a single fleet
 
          Returns device information for all devices in the specified fleet. The schema for device data is the same as the [GET /devices](#/Devices/getDevices) endpoint.         
@@ -1221,7 +1221,7 @@ class FleetsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginationResultComToradexApiGwDataDeviceInfoBasic",
+            '200': "PaginationResultDeviceInfoBasic",
             '400': "BadRequestRepr",
             '404': "NotFoundRepr",
         }
@@ -1254,7 +1254,7 @@ class FleetsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[PaginationResultComToradexApiGwDataDeviceInfoBasic]:
+    ) -> ApiResponse[PaginationResultDeviceInfoBasic]:
         """Get information about the devices in a single fleet
 
          Returns device information for all devices in the specified fleet. The schema for device data is the same as the [GET /devices](#/Devices/getDevices) endpoint.         
@@ -1298,7 +1298,7 @@ class FleetsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginationResultComToradexApiGwDataDeviceInfoBasic",
+            '200': "PaginationResultDeviceInfoBasic",
             '400': "BadRequestRepr",
             '404': "NotFoundRepr",
         }
@@ -1375,7 +1375,7 @@ class FleetsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "PaginationResultComToradexApiGwDataDeviceInfoBasic",
+            '200': "PaginationResultDeviceInfoBasic",
             '400': "BadRequestRepr",
             '404': "NotFoundRepr",
         }

@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**uuid** | **str** |  | 
+**uuid** | **UUID** |  | 
 
 ## Example
 

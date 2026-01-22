@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-    Torizon OTA
+    Torizon OTA v2beta API
 
      This API is rate limited and will return the following headers for each API call.    - X-RateLimit-Limit - The total number of requests allowed within a time period   - X-RateLimit-Remaining - The total number of requests still allowed until the end of the rate limiting period   - X-RateLimit-Reset - The number of seconds until the limit is fully reset  In addition, if an API client is rate limited, it will receive a HTTP 420 response with the following header:     - Retry-After - The number of seconds to wait until this request is allowed  
 
@@ -54,17 +54,29 @@ class TestDeviceInfoExtended(unittest.TestCase):
                         expression = '', )
                     ],
                 device_packages = [
-                    torizon_io_api.models.device_package.DevicePackage(
+                    torizon_io_api.models.installed_package.InstalledPackage(
                         component = '', 
-                        name = '', 
-                        version = '', 
-                        checksum = '', )
+                        installed = torizon_io_api.models.package.Package(
+                            name = '', 
+                            version = '', 
+                            package_id = '', 
+                            size = 56, 
+                            hashes = {
+                                'key' : ''
+                                }, 
+                            package_source = '0', 
+                            pkg_type = '', 
+                            hardware_ids = [
+                                ''
+                                ], 
+                            created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                            uri = '', 
+                            proprietary_meta = null, 
+                            comment = '', ), )
                     ],
-                device_tags = [
-                    torizon_io_api.models.tuple2_device_tag_id_device_tag_value.Tuple2_DeviceTagId_DeviceTagValue(
-                        _1 = '', 
-                        _2 = '', )
-                    ],
+                tags = {
+                    'key' : '/'
+                    },
                 network_info = torizon_io_api.models.network_info.NetworkInfo(
                     device_uuid = '', 
                     local_ip_v4 = '', 
@@ -78,7 +90,11 @@ class TestDeviceInfoExtended(unittest.TestCase):
                 device_id = '',
                 created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 device_status = 'NotSeen',
+                notes = '',
                 hibernated = True,
+                tags = {
+                    'key' : '/'
+                    },
                 network_info = torizon_io_api.models.network_info.NetworkInfo(
                     device_uuid = '', 
                     local_ip_v4 = '', 
