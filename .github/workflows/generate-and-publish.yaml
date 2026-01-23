@@ -1,0 +1,39 @@
+name: Build and Publish Torizon IO API
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Restore .pypirc
+        run: |
+          echo "${{ secrets.PYPIRC }}" | base64 -d > .pypirc
+          chmod 600 .pypirc
+
+      - name: Install tooling
+        run: |
+          pipx install poetry
+
+      - name: Build package
+        working-directory: generated
+        run: |
+          poetry build
+
+      - name: Publish to PyPI
+        working-directory: generated
+        run: |
+          poetry run pip install twine
+          poetry run twine upload --config-file ../.pypirc dist/*
