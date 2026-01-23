@@ -10,12 +10,12 @@ Name | Type | Description | Notes
 **package_id** | **str** |  | 
 **size** | **int** |  | 
 **hashes** | **Dict[str, str]** |  | 
-**package_source** | **str** |  | 
+**package_source** | **str** |  | [optional] 
 **pkg_type** | **str** |  | [optional] 
 **hardware_ids** | **List[str]** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **uri** | **str** |  | [optional] 
-**proprietary_meta** | [**AnyOf**](AnyOf.md) |  | [optional] 
+**proprietary_meta** | **object** |  | [optional] 
 **comment** | **str** |  | [optional] 
 
 ## Example

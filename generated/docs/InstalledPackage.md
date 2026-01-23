@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **component** | **str** |  | 
-**installed** | [**Package**](Package.md) |  | 
+**installed** | [**PackageInfo**](PackageInfo.md) |  | 
 
 ## Example
 

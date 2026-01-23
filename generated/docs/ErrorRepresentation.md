@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **code** | **str** |  | 
 **description** | **str** |  | 
-**cause** | [**AnyOf**](AnyOf.md) |  | [optional] 
+**cause** | **object** |  | [optional] 
 **error_id** | **UUID** |  | [optional] 
 
 ## Example

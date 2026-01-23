@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **uri** | **str** |  | [optional] 
-**metadata** | [**AnyOf**](AnyOf.md) |  | [optional] 
+**metadata** | **object** |  | [optional] 
 
 ## Example
 

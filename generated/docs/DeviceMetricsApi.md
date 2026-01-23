@@ -1,6 +1,6 @@
 # torizon_io_api.DeviceMetricsApi
 
-All URIs are relative to *https://app.torizon.io/api/v2*
+All URIs are relative to *https://app.torizon.io/api/v2beta*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -40,10 +40,10 @@ from torizon_io_api.models.metrics_response import MetricsResponse
 from torizon_io_api.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://app.torizon.io/api/v2
+# Defining the host is optional and defaults to https://app.torizon.io/api/v2beta
 # See configuration.py for a list of all supported configuration parameters.
 configuration = torizon_io_api.Configuration(
-    host = "https://app.torizon.io/api/v2"
+    host = "https://app.torizon.io/api/v2beta"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -145,10 +145,10 @@ from torizon_io_api.models.metrics_response import MetricsResponse
 from torizon_io_api.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://app.torizon.io/api/v2
+# Defining the host is optional and defaults to https://app.torizon.io/api/v2beta
 # See configuration.py for a list of all supported configuration parameters.
 configuration = torizon_io_api.Configuration(
-    host = "https://app.torizon.io/api/v2"
+    host = "https://app.torizon.io/api/v2beta"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -253,10 +253,10 @@ from torizon_io_api.models.metrics_response import MetricsResponse
 from torizon_io_api.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://app.torizon.io/api/v2
+# Defining the host is optional and defaults to https://app.torizon.io/api/v2beta
 # See configuration.py for a list of all supported configuration parameters.
 configuration = torizon_io_api.Configuration(
-    host = "https://app.torizon.io/api/v2"
+    host = "https://app.torizon.io/api/v2beta"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -325,7 +325,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_device_data_metric_names**
-> PaginationResultString get_device_data_metric_names(var_from=var_from, to=to)
+> PaginationResultJavaLangString get_device_data_metric_names(var_from=var_from, to=to)
 
 Get the list of metrics available in your repository
 
@@ -347,14 +347,14 @@ This will return the list of metrics reported by devices in your repository duri
 
 ```python
 import torizon_io_api
-from torizon_io_api.models.pagination_result_string import PaginationResultString
+from torizon_io_api.models.pagination_result_java_lang_string import PaginationResultJavaLangString
 from torizon_io_api.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://app.torizon.io/api/v2
+# Defining the host is optional and defaults to https://app.torizon.io/api/v2beta
 # See configuration.py for a list of all supported configuration parameters.
 configuration = torizon_io_api.Configuration(
-    host = "https://app.torizon.io/api/v2"
+    host = "https://app.torizon.io/api/v2beta"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -395,7 +395,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PaginationResultString**](PaginationResultString.md)
+[**PaginationResultJavaLangString**](PaginationResultJavaLangString.md)
 
 ### Authorization
 
@@ -444,10 +444,10 @@ from torizon_io_api.models.fleet_metrics_outliers_response import FleetMetricsOu
 from torizon_io_api.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://app.torizon.io/api/v2
+# Defining the host is optional and defaults to https://app.torizon.io/api/v2beta
 # See configuration.py for a list of all supported configuration parameters.
 configuration = torizon_io_api.Configuration(
-    host = "https://app.torizon.io/api/v2"
+    host = "https://app.torizon.io/api/v2beta"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -540,10 +540,10 @@ from torizon_io_api.models.metrics_response import MetricsResponse
 from torizon_io_api.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://app.torizon.io/api/v2
+# Defining the host is optional and defaults to https://app.torizon.io/api/v2beta
 # See configuration.py for a list of all supported configuration parameters.
 configuration = torizon_io_api.Configuration(
-    host = "https://app.torizon.io/api/v2"
+    host = "https://app.torizon.io/api/v2beta"
 )
 
 # The client must configure the authentication and authorization parameters

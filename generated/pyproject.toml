@@ -1,12 +1,12 @@
 [project]
 name = "torizon_io_api"
-version = "0.0.6"
-description = "Torizon OTA v2 API Endpoints"
+version = "0.0.7"
+description = "Torizon OTA"
 authors = [
   {name = "OpenAPI Generator Community",email = "team@openapitools.org"},
 ]
 readme = "README.md"
-keywords = ["OpenAPI", "OpenAPI-Generator", "Torizon OTA v2 API Endpoints"]
+keywords = ["OpenAPI", "OpenAPI-Generator", "Torizon OTA"]
 requires-python = ">=3.9"
 
 dependencies = [
@@ -21,8 +21,8 @@ Repository = "https://github.com/GIT_USER_ID/GIT_REPO_ID"
 
 [tool.poetry]
 name = "torizon_io_api"
-version = "0.0.6"
-description = "Torizon OTA v2 API"
+version = "0.0.7"
+description = "Torizon OTA"
 authors = ["OpenAPI Generator Community <team@openapitools.org>"]
 readme = "README.md"
 

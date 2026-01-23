@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **hardware_ids** | **List[str]** |  | [optional] 
 **uri** | **str** |  | [optional] 
-**proprietary_meta** | [**AnyOf**](AnyOf.md) |  | [optional] 
+**proprietary_meta** | **object** |  | [optional] 
 **comment** | **str** |  | [optional] 
 
 ## Example
