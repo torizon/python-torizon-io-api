@@ -13,6 +13,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: TruffleHog Scan Workspace Files
+        shell: bash
+        run: |
+          docker run --rm -v "$PWD:/pwd" trufflesecurity/trufflehog:latest filesystem \
+            /pwd \
+            --exclude-paths=/pwd/.exclude-truffle \
+            --results=verified,unknown,unverified \
+            --fail
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -31,6 +40,14 @@ jobs:
         working-directory: generated
         run: |
           poetry build
+
+      - name: TruffleHog Scan Built Artifacts
+        working-directory: generated
+        run: |
+          docker run --rm -v "$PWD/dist:/dist" trufflesecurity/trufflehog:latest filesystem \
+            /dist \
+            --results=verified,unknown,unverified \
+            --fail
 
       - name: Publish to PyPI
         working-directory: generated
