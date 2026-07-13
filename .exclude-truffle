@@ -1,0 +1,5 @@
+.git/
+venv/
+generated/venv/
+generated/build/
+generated/dist/
